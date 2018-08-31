@@ -5,7 +5,7 @@ This module defines:
   * Jira Core action type instances
    
 ## API
-The API consists of all public Java types from `com.atlassian.performance.tools.report.api` and its subpackages:
+The API consists of all public Java types from `com.atlassian.performance.tools.jiraactions.api` and its subpackages:
 
   * [source compatibility]
   * [binary compatibility]

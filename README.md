@@ -4,12 +4,14 @@ This module defines:
   * a JPT measurement unit - user action
   * Jira Core action type instances
    
+## Reporting issues
 
-### Version and release management
-This module uses [gradle-release](https://bitbucket.org/atlassian/gradle-release/src/master/) plugin help with 
-version and release management. 
-Please refer to [plugin docs](https://bitbucket.org/atlassian/gradle-release/src/release-0.0.2/README.md) for more information.
+We track all the changes in a [public issue tracker](https://ecosystem.atlassian.net/secure/RapidBoard.jspa?rapidView=457&projectKey=JPERF).
+All the suggestions and bug reports are welcome.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ##License
 Copyright (c) 2018 Atlassian and others.

@@ -44,5 +44,6 @@ data class ActionType<out T>(
 @JvmField val VIEW_ISSUE = ActionType("View Issue") { Unit }
 @JvmField val VIEW_DASHBOARD = ActionType("View Dashboard") { Unit }
 @JvmField val VIEW_BOARD = ActionType("View Board") { IssuesOnBoard(it) }
+@JvmField val VIEW_BACKLOG = ActionType("View Backlog") { Unit }
 @JvmField val LOG_IN = ActionType("Log In") { Unit }
 @JvmField val SET_UP = ActionType("Set Up") { Unit }

@@ -4,7 +4,6 @@ import com.atlassian.performance.tools.jiraactions.api.ActionMetric
 import com.atlassian.performance.tools.jiraactions.api.ActionResult
 import com.atlassian.performance.tools.jiraactions.api.w3c.RecordedPerformanceEntries
 import com.atlassian.performance.tools.jiraactions.w3c.StreamingDrilldownFormat
-import com.atlassian.performance.tools.jiraactions.w3c.VerboseJsonFormat
 import java.time.Duration
 import java.time.Instant
 import java.util.*
@@ -15,7 +14,6 @@ import javax.json.stream.JsonParser.Event.*
 internal class StreamingMetricFormat {
 
     private val streamingDrilldownFormat = StreamingDrilldownFormat()
-    private val bufferingDrilldownFormat = VerboseJsonFormat()
 
     fun deserialize(
         json: JsonParser
@@ -45,20 +43,19 @@ internal class StreamingMetricFormat {
                         "drilldown" -> drilldown = streamingDrilldownFormat.deserializeRecordedEntries(json)
                     }
                 }
-                END_OBJECT -> {
-                }
-                else -> throw Exception("Unexpected $event")
+                END_OBJECT -> return ActionMetric.Builder(
+                    label = label!!,
+                    result = result!!,
+                    duration = duration!!,
+                    start = start!!
+                )
+                    .virtualUser(virtualUser!!)
+                    .observation(observation)
+                    .drilldown(drilldown)
+                    .build()
+                else -> throw Exception("Unexpected $event at ${json.location}")
             }
         }
-        return ActionMetric.Builder(
-            label = label!!,
-            result = result!!,
-            duration = duration!!,
-            start = start!!
-        )
-            .virtualUser(virtualUser!!)
-            .observation(observation)
-            .drilldown(drilldown)
-            .build()
+        throw Exception("Didn't reach the end of the object at ${json.location}")
     }
 }

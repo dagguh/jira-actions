@@ -7,8 +7,6 @@ import javax.json.stream.JsonParser.Event.*
 
 internal class StreamingDrilldownFormat {
 
-    private val buffering = VerboseJsonFormat()
-
     fun deserializeRecordedEntries(
         json: JsonParser
     ): RecordedPerformanceEntries {
@@ -25,13 +23,14 @@ internal class StreamingDrilldownFormat {
                         "resources" -> resources = deserializeResources(json)
                     }
                 }
-                else -> throw Exception("Unexpected $event")
+                END_OBJECT -> return RecordedPerformanceEntries(
+                    navigations = navigations!!,
+                    resources = resources!!
+                )
+                else -> throwUnexpectedEvent(event, json)
             }
         }
-        return RecordedPerformanceEntries(
-            navigations = navigations!!,
-            resources = resources!!
-        )
+        throwUnterminatedObject(json)
     }
 
     private fun deserializeNavigations(
@@ -40,21 +39,17 @@ internal class StreamingDrilldownFormat {
         val navigations = mutableListOf<PerformanceNavigationTiming>()
         while (json.hasNext()) {
             val event = json.next()
-            if (event == END_ARRAY) {
-                break
-            }
             when (event) {
                 START_ARRAY -> {
                 }
-                START_OBJECT -> {
-                    navigations += deserializeNavigationTiming(json)
-                }
+                START_OBJECT -> navigations += deserializeNavigationTiming(json)
                 END_OBJECT -> {
                 }
-                else -> throw Exception("Unexpected $event")
+                END_ARRAY -> return navigations
+                else -> throwUnexpectedEvent(event, json)
             }
         }
-        return navigations
+        throwUnterminatedArray(json)
     }
 
     private fun deserializeNavigationTiming(
@@ -91,22 +86,23 @@ internal class StreamingDrilldownFormat {
                         "redirectCount" -> redirectCount = json.bigDecimal.intValueExact()
                     }
                 }
-                else -> throw Exception("Unexpected $event")
+                END_OBJECT -> return PerformanceNavigationTiming(
+                    resource = resource!!,
+                    unloadEventStart = unloadEventStart!!,
+                    unloadEventEnd = unloadEventEnd!!,
+                    domInteractive = domInteractive!!,
+                    domContentLoadedEventStart = domContentLoadedEventStart!!,
+                    domContentLoadedEventEnd = domContentLoadedEventEnd!!,
+                    domComplete = domComplete!!,
+                    loadEventStart = loadEventStart!!,
+                    loadEventEnd = loadEventEnd!!,
+                    type = type!!,
+                    redirectCount = redirectCount!!
+                )
+                else -> throwUnexpectedEvent(event, json)
             }
         }
-        return PerformanceNavigationTiming(
-            resource = resource!!,
-            unloadEventStart = unloadEventStart!!,
-            unloadEventEnd = unloadEventEnd!!,
-            domInteractive = domInteractive!!,
-            domContentLoadedEventStart = domContentLoadedEventStart!!,
-            domContentLoadedEventEnd = domContentLoadedEventEnd!!,
-            domComplete = domComplete!!,
-            loadEventStart = loadEventStart!!,
-            loadEventEnd = loadEventEnd!!,
-            type = type!!,
-            redirectCount = redirectCount!!
-        )
+        throwUnterminatedObject(json)
     }
 
     private fun deserializeResources(
@@ -115,21 +111,17 @@ internal class StreamingDrilldownFormat {
         val resources = mutableListOf<PerformanceResourceTiming>()
         while (json.hasNext()) {
             val event = json.next()
-            if (event == END_ARRAY) {
-                break
-            }
             when (event) {
                 START_ARRAY -> {
                 }
-                START_OBJECT -> {
-                    resources += deserializeResourceTiming(json)
-                }
+                START_OBJECT -> resources += deserializeResourceTiming(json)
                 END_OBJECT -> {
                 }
-                else -> throw Exception("Unexpected $event")
+                END_ARRAY -> return resources
+                else -> throwUnexpectedEvent(event, json)
             }
         }
-        return resources
+        throwUnterminatedArray(json)
     }
 
     private fun deserializeResourceTiming(
@@ -180,29 +172,30 @@ internal class StreamingDrilldownFormat {
                         "decodedBodySize" -> decodedBodySize = json.bigDecimal.longValueExact()
                     }
                 }
-                else -> throw Exception("Unexpected $event")
+                END_OBJECT -> return PerformanceResourceTiming(
+                    entry = entry!!,
+                    initiatorType = initiatorType!!,
+                    nextHopProtocol = nextHopProtocol!!,
+                    workerStart = workerStart!!,
+                    redirectStart = redirectStart!!,
+                    redirectEnd = redirectEnd!!,
+                    fetchStart = fetchStart!!,
+                    domainLookupStart = domainLookupStart!!,
+                    domainLookupEnd = domainLookupEnd!!,
+                    connectStart = connectStart!!,
+                    connectEnd = connectEnd!!,
+                    secureConnectionStart = secureConnectionStart!!,
+                    requestStart = requestStart!!,
+                    responseStart = responseStart!!,
+                    responseEnd = responseEnd!!,
+                    transferSize = transferSize!!,
+                    encodedBodySize = encodedBodySize!!,
+                    decodedBodySize = decodedBodySize!!
+                )
+                else -> throwUnexpectedEvent(event, json)
             }
         }
-        return PerformanceResourceTiming(
-            entry = entry!!,
-            initiatorType = initiatorType!!,
-            nextHopProtocol = nextHopProtocol!!,
-            workerStart = workerStart!!,
-            redirectStart = redirectStart!!,
-            redirectEnd = redirectEnd!!,
-            fetchStart = fetchStart!!,
-            domainLookupStart = domainLookupStart!!,
-            domainLookupEnd = domainLookupEnd!!,
-            connectStart = connectStart!!,
-            connectEnd = connectEnd!!,
-            secureConnectionStart = secureConnectionStart!!,
-            requestStart = requestStart!!,
-            responseStart = responseStart!!,
-            responseEnd = responseEnd!!,
-            transferSize = transferSize!!,
-            encodedBodySize = encodedBodySize!!,
-            decodedBodySize = decodedBodySize!!
-        )
+        throwUnterminatedObject(json)
     }
 
     private fun deserializeEntry(
@@ -225,14 +218,29 @@ internal class StreamingDrilldownFormat {
                         "duration" -> duration = Duration.parse(json.string)
                     }
                 }
-                else -> throw Exception("Unexpected $event")
+                END_OBJECT -> return PerformanceEntry(
+                    name = name!!,
+                    entryType = entryType!!,
+                    startTime = startTime!!,
+                    duration = duration!!
+                )
+                else -> throwUnexpectedEvent(event, json)
             }
         }
-        return PerformanceEntry(
-            name = name!!,
-            entryType = entryType!!,
-            startTime = startTime!!,
-            duration = duration!!
-        )
+        throwUnterminatedObject(json)
     }
+
+    private fun throwUnexpectedEvent(
+        event: JsonParser.Event,
+        json: JsonParser
+    ): Nothing = throw Exception("Unexpected $event at ${json.location}")
+
+    private fun throwUnterminatedObject(
+        json: JsonParser
+    ): Nothing = throw Exception("Didn't reach the end of the object at ${json.location}")
+
+    private fun throwUnterminatedArray(
+        json: JsonParser
+    ): Nothing = throw Exception("Didn't reach the end of the array at ${json.location}")
+
 }

@@ -1,7 +1,7 @@
 package com.atlassian.performance.tools.jiraactions.api.w3c
 
-import org.openqa.selenium.JavascriptExecutor
 import java.time.Duration
+import org.openqa.selenium.JavascriptExecutor
 
 /**
  * Obtains entries from [javascript].

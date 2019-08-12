@@ -5,11 +5,11 @@ import com.atlassian.performance.tools.jiraactions.api.page.form.IssueForm
 import com.atlassian.performance.tools.jiraactions.api.page.isElementPresent
 import com.atlassian.performance.tools.jiraactions.api.page.tolerateDirtyFormsOnCurrentPage
 import com.atlassian.performance.tools.jiraactions.api.page.wait
+import java.time.Duration
+import java.util.function.Supplier
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions.*
-import java.time.Duration
-import java.util.function.Supplier
 
 internal class IssueCreateDialog(
     private val driver: WebDriver
@@ -70,7 +70,7 @@ internal class IssueCreateDialog(
         return this
     }
 
-    private fun dismissConfigureFieldsDialog(){
+    private fun dismissConfigureFieldsDialog() {
         driver.wait(elementToBeClickable(By.xpath("//div[@id='create-issue-dialog']//h2"))).click()
     }
 
@@ -83,5 +83,4 @@ internal class IssueCreateDialog(
         driver.wait(elementToBeClickable(By.id("create-issue-submit"))).click()
         driver.wait(Duration.ofSeconds(30), invisibilityOfElementLocated(By.className("aui-blanket")))
     }
-
 }

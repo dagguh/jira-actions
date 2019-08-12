@@ -2,11 +2,11 @@ package com.atlassian.performance.tools.jiraactions.api.page
 
 import com.atlassian.performance.tools.jiraactions.api.memories.Project
 import com.atlassian.performance.tools.jiraactions.page.UserProfilePage
+import java.time.Duration
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions.or
 import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated
-import java.time.Duration
 
 class IssuePage(
     private val driver: WebDriver

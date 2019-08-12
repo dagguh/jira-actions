@@ -1,10 +1,10 @@
 package com.atlassian.performance.tools.jiraactions.api.page
 
 import com.atlassian.performance.tools.jiraactions.api.memories.User
+import java.time.Duration
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
-import java.time.Duration
 
 class LoginPage(
     private val driver: WebDriver

@@ -1,11 +1,10 @@
 package com.atlassian.performance.tools.jiraactions.api
 
 import com.atlassian.performance.tools.jiraactions.api.page.*
-import com.atlassian.performance.tools.jiraactions.api.page.BackupConfiguration
-import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
 import java.net.URI
 import java.net.URLEncoder
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
 
 data class WebJira(
     val driver: WebDriver,
@@ -23,7 +22,7 @@ data class WebJira(
         return RichTextEditorConfiguration(driver, accessAdmin())
     }
 
-    fun configureBackupPolicy() : BackupConfiguration {
+    fun configureBackupPolicy(): BackupConfiguration {
         navigateTo("secure/admin/ViewServices!default.jspa")
         return BackupConfiguration(driver, accessAdmin())
     }

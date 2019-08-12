@@ -1,10 +1,10 @@
 package com.atlassian.performance.tools.jiraactions.api.page
 
 import com.atlassian.performance.tools.jiraactions.api.page.form.IssueForm
+import java.time.Duration
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions.*
-import java.time.Duration
 
 class EditIssuePage(
     private val driver: WebDriver

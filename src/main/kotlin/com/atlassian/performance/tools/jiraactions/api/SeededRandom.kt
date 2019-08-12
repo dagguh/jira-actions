@@ -1,8 +1,8 @@
 package com.atlassian.performance.tools.jiraactions.api
 
+import java.util.*
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import java.util.*
 
 class SeededRandom(
     seed: Long = Random().nextLong()

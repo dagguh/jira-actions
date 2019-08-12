@@ -1,9 +1,9 @@
 package com.atlassian.performance.tools.jiraactions.page.form
 
 import com.atlassian.performance.tools.jiraactions.api.SeededRandom
+import java.time.Instant.now
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import java.time.Instant.now
 
 internal class Select(
     private val input: WebElement
@@ -26,8 +26,8 @@ internal class Select(
     override fun hasValue(): Boolean {
         return select
             .allSelectedOptions
-            .isNotEmpty()
-            && isValidOption(select.firstSelectedOption)
+            .isNotEmpty() &&
+            isValidOption(select.firstSelectedOption)
     }
 
     private fun isValidOption(

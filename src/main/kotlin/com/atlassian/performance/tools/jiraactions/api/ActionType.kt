@@ -4,9 +4,9 @@ package com.atlassian.performance.tools.jiraactions.api
 import com.atlassian.performance.tools.jiraactions.api.observation.IssueObservation
 import com.atlassian.performance.tools.jiraactions.api.observation.IssuesOnBoard
 import com.atlassian.performance.tools.jiraactions.api.observation.SearchJqlObservation
+import javax.json.JsonObject
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import javax.json.JsonObject
 
 /**
  * Represents a kind of user transaction within the application, e.g. visiting a Scrum board.

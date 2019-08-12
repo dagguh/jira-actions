@@ -2,7 +2,6 @@ package com.atlassian.performance.tools.jiraactions.api.parser
 
 import com.atlassian.performance.tools.jiraactions.MetricVerboseJsonFormat
 import com.atlassian.performance.tools.jiraactions.api.ActionMetric
-import org.apache.logging.log4j.LogManager
 import java.io.InputStream
 import java.io.StringReader
 import java.util.stream.Stream
@@ -10,6 +9,7 @@ import javax.json.Json
 import javax.json.JsonStructure
 import kotlin.streams.asStream
 import kotlin.streams.toList
+import org.apache.logging.log4j.LogManager
 
 class ActionMetricsParser {
 

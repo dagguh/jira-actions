@@ -1,12 +1,12 @@
 package com.atlassian.performance.tools.jiraactions.api.page
 
 import com.atlassian.performance.tools.jiraactions.page.IssueCreateDialog
+import java.time.Duration
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedCondition
 import org.openqa.selenium.support.ui.ExpectedConditions.*
-import java.time.Duration
 
 class DashboardPage(
     private val driver: WebDriver
@@ -43,7 +43,7 @@ class DashboardPage(
     private class CheckIFrame : ExpectedCondition<Boolean> {
         override fun apply(input: WebDriver?): Boolean? {
             input as JavascriptExecutor
-            //we currently support only single iframe on dashboard in this check
+            // we currently support only single iframe on dashboard in this check
             return input.executeScript(
                 """
                 iframes = $('#dashboard').find('iframe');

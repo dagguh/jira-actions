@@ -1,10 +1,10 @@
 package com.atlassian.performance.tools.jiraactions.api.page
 
+import java.time.Duration
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedConditions.*
-import java.time.Duration
 
 /**
  * Represents the [Jira Rich Text Editor](https://confluence.atlassian.com/adminjiraserver/rich-text-editing-938847886.html)
@@ -17,10 +17,9 @@ class RichTextEditorTextArea(
 
     fun overwriteIfPresent(text: String) {
         val attrClass = textArea.getAttribute("class")
-        if(attrClass != null && attrClass.contains(other = "richeditor-cover", ignoreCase = true)){
+        if (attrClass != null && attrClass.contains(other = "richeditor-cover", ignoreCase = true)) {
             overwriteRich(text)
-        }
-        else{
+        } else {
             overwritePlain(text)
         }
     }
@@ -60,5 +59,4 @@ class RichTextEditorTextArea(
             driver.switchTo().parentFrame()
         }
     }
-
 }

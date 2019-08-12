@@ -12,7 +12,6 @@ import com.atlassian.performance.tools.jiraactions.api.page.IssuePage
  */
 typealias JqlPrescription = (IssuePage) -> String?
 
-
 object JqlPrescriptions {
 
     val previousReporters: JqlPrescription = { page: IssuePage ->

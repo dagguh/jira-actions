@@ -1,5 +1,6 @@
 package com.atlassian.performance.tools.jiraactions.api.action
 
+import com.atlassian.performance.tools.jiraactions.api.SEARCH_JQL_CHANGELOG
 import com.atlassian.performance.tools.jiraactions.api.WebJira
 import com.atlassian.performance.tools.jiraactions.api.measure.ActionMeter
 import com.atlassian.performance.tools.jiraactions.api.memories.IssueKeyMemory
@@ -7,7 +8,6 @@ import com.atlassian.performance.tools.jiraactions.api.memories.JqlMemory
 import com.atlassian.performance.tools.jiraactions.api.observation.SearchJqlObservation
 import com.atlassian.performance.tools.jiraactions.api.page.IssueNavigatorPage
 import com.atlassian.performance.tools.jiraactions.jql.BuiltInJQL
-import com.atlassian.performance.tools.jiraactions.api.SEARCH_JQL_CHANGELOG
 import java.util.function.Predicate
 import javax.json.JsonObject
 

@@ -1,8 +1,7 @@
 package com.atlassian.performance.tools.jiraactions.api
 
-import org.apache.commons.math3.stat.StatUtils
 import java.time.Duration
-
+import org.apache.commons.math3.stat.StatUtils
 
 class ActionMetricStatistics(
     private val actionMetrics: List<ActionMetric>

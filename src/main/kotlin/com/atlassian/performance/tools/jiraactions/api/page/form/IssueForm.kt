@@ -2,12 +2,12 @@ package com.atlassian.performance.tools.jiraactions.api.page.form
 
 import com.atlassian.performance.tools.jiraactions.api.page.wait
 import com.atlassian.performance.tools.jiraactions.page.form.*
+import java.time.Duration
+import java.util.function.Supplier
 import org.openqa.selenium.By
 import org.openqa.selenium.By.xpath
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
-import java.time.Duration
-import java.util.function.Supplier
 
 class IssueForm(
     private val formLocator: By,

@@ -2,10 +2,10 @@ package com.atlassian.performance.tools.jiraactions.api.action
 
 import com.atlassian.performance.tools.jiraactions.api.EDIT_ISSUE
 import com.atlassian.performance.tools.jiraactions.api.EDIT_ISSUE_SUBMIT
-import com.atlassian.performance.tools.jiraactions.api.observation.IssueObservation
 import com.atlassian.performance.tools.jiraactions.api.WebJira
 import com.atlassian.performance.tools.jiraactions.api.measure.ActionMeter
 import com.atlassian.performance.tools.jiraactions.api.memories.IssueMemory
+import com.atlassian.performance.tools.jiraactions.api.observation.IssueObservation
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 
@@ -34,6 +34,5 @@ class EditIssueAction(
             )
             return@measure editIssueForm
         }
-
     }
 }

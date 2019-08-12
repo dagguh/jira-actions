@@ -6,9 +6,9 @@ import com.atlassian.performance.tools.jiraactions.api.memories.adaptive.jql.Jql
 import com.atlassian.performance.tools.jiraactions.api.memories.adaptive.jql.JqlPrescriptions
 import com.atlassian.performance.tools.jiraactions.api.page.IssuePage
 import com.atlassian.performance.tools.jiraactions.jql.BuiltInJQL
+import java.util.function.Predicate
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import java.util.function.Predicate
 
 class AdaptiveJqlMemory(
     private val random: SeededRandom
@@ -21,8 +21,8 @@ class AdaptiveJqlMemory(
     }
 
     private val jqls = mutableListOf(
-        TaggedBakedJql(BakedJql({ _ -> ""}, "resolved is not empty order by description"), BuiltInJQL.RESOLVED.name),
-        TaggedBakedJql(BakedJql({ _ -> ""}, "text ~ \"a*\" order by summary"), BuiltInJQL.GENERIC_WIDE.name)
+        TaggedBakedJql(BakedJql({ _ -> "" }, "resolved is not empty order by description"), BuiltInJQL.RESOLVED.name),
+        TaggedBakedJql(BakedJql({ _ -> "" }, "text ~ \"a*\" order by summary"), BuiltInJQL.GENERIC_WIDE.name)
     )
 
     private val jqlPrescriptions = mutableMapOf(
@@ -52,11 +52,11 @@ class AdaptiveJqlMemory(
     }
 
     override fun remember(memories: Collection<String>) {
-        jqls.addAll(memories.map { TaggedBakedJql(BakedJql({ _ -> ""}, it)) })
+        jqls.addAll(memories.map { TaggedBakedJql(BakedJql({ _ -> "" }, it)) })
     }
 
     override fun recallByTag(filter: Predicate<String>): String? {
-        return random.pick(jqls.filter {it.tag != null && filter.test(it.tag.toString()) }.toList())?.baked?.jql
+        return random.pick(jqls.filter { it.tag != null && filter.test(it.tag.toString()) }.toList())?.baked?.jql
     }
 
     private class TaggedBakedJql(val baked: BakedJql, val tag: String? = null)

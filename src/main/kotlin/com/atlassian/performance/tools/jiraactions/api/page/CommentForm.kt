@@ -1,10 +1,10 @@
 package com.atlassian.performance.tools.jiraactions.api.page
 
+import java.time.Duration
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions.or
 import org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated
-import java.time.Duration
 
 class CommentForm(
     private val driver: WebDriver

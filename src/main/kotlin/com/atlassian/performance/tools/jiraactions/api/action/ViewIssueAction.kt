@@ -7,9 +7,9 @@ import com.atlassian.performance.tools.jiraactions.api.memories.Issue
 import com.atlassian.performance.tools.jiraactions.api.memories.IssueKeyMemory
 import com.atlassian.performance.tools.jiraactions.api.memories.IssueMemory
 import com.atlassian.performance.tools.jiraactions.api.memories.JqlMemory
+import javax.json.Json
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import javax.json.Json
 
 class ViewIssueAction(
     private val jira: WebJira,

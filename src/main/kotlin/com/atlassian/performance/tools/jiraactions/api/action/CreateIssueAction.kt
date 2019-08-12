@@ -24,7 +24,7 @@ class CreateIssueAction(
             val dashboardPage = meter.measure(VIEW_DASHBOARD) {
                 jira.goToDashboard().waitForDashboard()
             }.apply {
-                dismissAllPopups();
+                dismissAllPopups()
             }
             val issueCreateDialog = dashboardPage.openIssueCreateDialog()
             val filledForm = issueCreateDialog

@@ -1,11 +1,11 @@
 package com.atlassian.performance.tools.jiraactions.page
 
 import com.atlassian.performance.tools.jiraactions.api.page.wait
+import java.time.Duration
+import java.util.*
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
-import java.time.Duration
-import java.util.*
 
 fun splitTagTextIntoLines(text: String): List<String> {
     return text.replace("<br>", "\n", ignoreCase = true)

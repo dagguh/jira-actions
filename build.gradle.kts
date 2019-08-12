@@ -1,11 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val kotlinVersion = "1.2.70"
+val kotlinVersion = "1.3.30"
 
 plugins {
-    kotlin("jvm").version("1.2.70")
+    kotlin("jvm").version("1.3.30")
     `java-library`
     id("com.atlassian.performance.tools.gradle-release").version("0.5.0")
+    id("org.jlleitschuh.gradle.ktlint").version("8.2.0")
 }
 
 configurations.all {
@@ -31,7 +32,7 @@ dependencies {
 
     implementation(webdriver("selenium-support"))
     implementation(webdriver("selenium-chrome-driver"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.glassfish:javax.json:1.1")
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("com.atlassian.performance.tools:concurrency:[1.0.0,2.0.0)")
@@ -77,6 +78,10 @@ tasks.getByName("test", Test::class).apply {
 
 val testIntegration = task<Test>("testIntegration") {
     include("**/*IT.class")
+}
+
+ktlint {
+    version.set("0.34.2")
 }
 
 tasks["check"].dependsOn(testIntegration)

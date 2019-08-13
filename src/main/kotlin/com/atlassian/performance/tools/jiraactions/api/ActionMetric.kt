@@ -11,7 +11,9 @@ import javax.json.JsonObject
 /**
  * @deprecated The generated `copy` and `componentN` methods should not be used. It will become a non-data class.
  */
-data class ActionMetric @Deprecated("Use ActionMetric.Builder instead.") constructor(
+data class ActionMetric
+@Deprecated("Use ActionMetric.Builder instead.")
+constructor(
     val label: String,
     val result: ActionResult,
     val duration: Duration,

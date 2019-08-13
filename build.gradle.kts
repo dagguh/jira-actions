@@ -82,6 +82,7 @@ val testIntegration = task<Test>("testIntegration") {
 
 ktlint {
     version.set("0.34.2")
+    enableExperimentalRules.set(true)
 }
 
 tasks["check"].dependsOn(testIntegration)

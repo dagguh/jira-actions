@@ -2,13 +2,12 @@ package com.atlassian.performance.tools.jiraactions.api
 
 import com.atlassian.performance.tools.jiraactions.api.ActionResult.ERROR
 import com.atlassian.performance.tools.jiraactions.api.ActionResult.OK
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
-import org.junit.Test
 import java.time.Duration
 import java.time.Duration.ofSeconds
 import java.time.Instant.now
-
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Test
 
 class ActionMetricStatisticsTest {
 

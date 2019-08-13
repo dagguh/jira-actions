@@ -10,14 +10,14 @@ import com.atlassian.performance.tools.jiraactions.api.memories.User
 import com.atlassian.performance.tools.jiraactions.api.memories.UserMemory
 import com.atlassian.performance.tools.jiraactions.api.page.isElementPresent
 import com.atlassian.performance.tools.jiraactions.api.w3c.DisabledW3cPerformanceTimeline
+import java.time.Clock
+import java.util.*
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.assertj.core.api.Assertions
 import org.junit.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
-import java.time.Clock
-import java.util.*
 
 class JiraCoreScenarioIT {
     private val logger: Logger = LogManager.getLogger(this::class.java)
@@ -114,9 +114,11 @@ class JiraCoreScenarioIT {
     private fun goToServices(driver: RemoteWebDriver, jira: Jira) {
         driver
             .navigate()
-            .to(jira.getUri()
-                .resolve("secure/admin/ViewServices!default.jspa")
-                .toURL())
+            .to(
+                jira.getUri()
+                    .resolve("secure/admin/ViewServices!default.jspa")
+                    .toURL()
+            )
 
         if (driver.isElementPresent(By.id("login-form-authenticatePassword"))) {
             driver.findElementById("login-form-authenticatePassword").sendKeys("admin")

@@ -5,14 +5,14 @@ import com.atlassian.performance.tools.jiraactions.api.ActionResult.ERROR
 import com.atlassian.performance.tools.jiraactions.api.ActionResult.OK
 import com.atlassian.performance.tools.jiraactions.api.observation.IssuesOnBoard
 import com.atlassian.performance.tools.jiraactions.api.w3c.*
-import org.junit.Assert.assertEquals
-import org.junit.Rule
-import org.junit.Test
-import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.time.Duration.*
 import java.time.Instant.parse
 import java.util.*
+import org.junit.Assert.assertEquals
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
 
 class AppendableActionMetricOutputTest {
 

@@ -7,10 +7,6 @@ import com.atlassian.performance.tools.jiraactions.api.measure.output.Collection
 import com.atlassian.performance.tools.jiraactions.api.w3c.DisabledW3cPerformanceTimeline
 import com.atlassian.performance.tools.jiraactions.api.w3c.RecordedPerformanceEntries
 import com.atlassian.performance.tools.jiraactions.api.w3c.W3cPerformanceTimeline
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
 import java.time.Clock
 import java.time.Duration
 import java.time.Duration.ZERO
@@ -19,6 +15,10 @@ import java.time.Instant
 import java.time.Instant.parse
 import java.time.ZoneId
 import java.util.*
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.Test
 
 class ActionMeterTest {
     private val logger: Logger = LogManager.getLogger(this::class.java)

@@ -2,11 +2,11 @@ package com.atlassian.performance.tools.jiraactions.api.parser
 
 import com.atlassian.performance.tools.io.api.directories
 import com.atlassian.performance.tools.io.api.ensureDirectory
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
 import java.io.File
 import java.nio.file.Files
 import java.util.zip.ZipFile
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.Test
 
 class MergingActionMetricsParserTest {
 

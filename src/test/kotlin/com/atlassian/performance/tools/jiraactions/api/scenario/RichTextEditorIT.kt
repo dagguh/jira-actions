@@ -16,12 +16,12 @@ import com.atlassian.performance.tools.jiraactions.api.memories.adaptive.Adaptiv
 import com.atlassian.performance.tools.jiraactions.api.memories.adaptive.AdaptiveJqlMemory
 import com.atlassian.performance.tools.jiraactions.api.memories.adaptive.AdaptiveProjectMemory
 import com.atlassian.performance.tools.jiraactions.api.w3c.DisabledW3cPerformanceTimeline
+import java.time.Clock
+import java.util.*
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.assertj.core.api.Assertions
 import org.junit.Test
-import java.time.Clock
-import java.util.*
 
 /**
  * Test Editing issue without SetupAction (i.e Rich Text editor enabled)
@@ -88,7 +88,6 @@ class RichTextEditorIT {
             metric.result
         }
         Assertions.assertThat(results).containsOnly(ActionResult.OK)
-
     }
 }
 
@@ -138,5 +137,4 @@ class JiraEditScenario : Scenario {
             addComment
         )
     }
-
 }

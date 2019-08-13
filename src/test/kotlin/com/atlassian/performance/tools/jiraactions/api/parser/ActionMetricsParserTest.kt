@@ -4,16 +4,16 @@ import com.atlassian.performance.tools.jiraactions.api.ActionMetric
 import com.atlassian.performance.tools.jiraactions.api.ActionResult
 import com.atlassian.performance.tools.jiraactions.api.VIEW_BOARD
 import com.atlassian.performance.tools.jiraactions.api.observation.IssuesOnBoard
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.hasItem
-import org.junit.Assert.assertThat
-import org.junit.Test
 import java.time.Duration.ofMillis
 import java.time.Duration.ofSeconds
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.*
 import kotlin.streams.asSequence
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.hasItem
+import org.junit.Assert.assertThat
+import org.junit.Test
 
 class ActionMetricsParserTest {
 

@@ -32,9 +32,15 @@ class UserProfilePageTest {
             "a metallic fish<br>" +
             "\nupon celestial vault\n<br>" +
             "           illusion of wings\n\n"
-        Assert.assertThat(splitTagTextIntoLines(haiku), equalTo(listOf(
-            "a metallic fish",
-            "upon celestial vault",
-            "illusion of wings")))
+        Assert.assertThat(
+            splitTagTextIntoLines(haiku),
+            equalTo(
+                listOf(
+                    "a metallic fish",
+                    "upon celestial vault",
+                    "illusion of wings"
+                )
+            )
+        )
     }
 }

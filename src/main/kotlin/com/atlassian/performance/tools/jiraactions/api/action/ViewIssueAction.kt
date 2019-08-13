@@ -29,10 +29,11 @@ class ViewIssueAction(
         val issuePage = meter.measure(
             key = VIEW_ISSUE,
             action = { jira.goToIssue(issueKey).waitForSummary() },
-            observation = { page -> Json.createObjectBuilder()
-                .add("issueKey", issueKey)
-                .add("issueId", page.getIssueId())
-                .build()
+            observation = { page ->
+                Json.createObjectBuilder()
+                    .add("issueKey", issueKey)
+                    .add("issueId", page.getIssueId())
+                    .build()
             }
         )
         val issue = Issue(

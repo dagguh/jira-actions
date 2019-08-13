@@ -33,15 +33,19 @@ internal class IssueCreateDialog(
         return this
     }
 
-    fun selectProject(projectName: String) = form.waitForRefresh(Supplier {
-        projectField.select(projectName)
-        return@Supplier this
-    })
+    fun selectProject(projectName: String) = form.waitForRefresh(
+        Supplier {
+            projectField.select(projectName)
+            return@Supplier this
+        }
+    )
 
-    fun selectIssueType(issueType: String) = form.waitForRefresh(Supplier {
-        issueTypeField.select(issueType)
-        return@Supplier this
-    })
+    fun selectIssueType(issueType: String) = form.waitForRefresh(
+        Supplier {
+            issueTypeField.select(issueType)
+            return@Supplier this
+        }
+    )
 
     fun getIssueTypes() = issueTypeField.getSuggestions()
         .plus(issueTypeField.getCurrentValue())

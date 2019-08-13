@@ -15,8 +15,11 @@ internal class FormFieldFactory(
         return when (matchedDescriptors.size) {
             1 -> matchedDescriptors[0].create(driver, fieldGroup, getInput(fieldGroup)!!)
             0 -> UnknownFormField(fieldGroup)
-            else -> throw Exception("Field group '${fieldGroup.getAttribute("innerHTML")}' matches more than one form field" +
-                "'$matchedDescriptors'")
+            else ->
+                throw Exception(
+                    "Field group '${fieldGroup.getAttribute("innerHTML")}' matches more than one form field" +
+                        "'$matchedDescriptors'"
+                )
         }
     }
 

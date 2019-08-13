@@ -30,13 +30,15 @@ internal class UserProfilePage(
      * @return list of groups the user belongs to.
      */
     fun getUserGroups(): List<String> {
-        return (driver.findElements(userInformationDetails)
-            .filter { it.findElement(By.tagName("dt")).text.trim().equals("Groups:") }
-            .map { it.findElement(By.tagName("dd")) }
-            .firstOrNull()
-            ?.text
-            ?.let { splitTagTextIntoLines(it) }
-            ?: Collections.emptyList())
+        return (
+            driver.findElements(userInformationDetails)
+                .filter { it.findElement(By.tagName("dt")).text.trim().equals("Groups:") }
+                .map { it.findElement(By.tagName("dd")) }
+                .firstOrNull()
+                ?.text
+                ?.let { splitTagTextIntoLines(it) }
+                ?: Collections.emptyList()
+            )
     }
 
     fun waitForPageLoad(): UserProfilePage {

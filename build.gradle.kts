@@ -85,4 +85,5 @@ ktlint {
     enableExperimentalRules.set(true)
 }
 
+tasks["ktlintCheck"].dependsOn(tasks["ktlintFormat"])
 tasks["check"].dependsOn(testIntegration)

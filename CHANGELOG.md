@@ -27,8 +27,8 @@ Dropping a requirement of a major version of a dependency is a new contract.
 [Unreleased]: https://github.com/atlassian/jira-actions/compare/release-3.10.0...master
 
 ### Fixed
-- `CreateIssueAction` should now properly fill in issue data [JPERF-298].
-- Upgraded Selenium to 3.141.59
+- Properly fill issue data in `CreateIssueAction`. Fix [JPERF-298].
+- Upgrade Selenium to `3.141.59`.
 - Remove `text ~ "a*"` from `AdaptiveJqlMemory`. Fix [JPERF-604].
 
 [JPERF-298]: https://ecosystem.atlassian.net/browse/JPERF-298

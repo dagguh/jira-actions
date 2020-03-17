@@ -77,17 +77,29 @@ data class ActionMetric @Deprecated("Use ActionMetric.Builder instead.") constru
 
     class Builder(
         private val label: String,
-        private val result: ActionResult,
-        private val duration: Duration,
+        private var result: ActionResult,
+        private var duration: Duration,
         private val start: Instant
     ) {
         private var observation: JsonObject? = null
         private var drilldown: RecordedPerformanceEntries? = null
         private var virtualUser: UUID = UUID.randomUUID()
 
+
+        constructor(label: String, virtualUser: UUID, start: Instant) : this(
+            label = label,
+            result = ActionResult.OK,
+            duration = Duration.ofMillis(0),
+            start = start
+        ){
+            this.virtualUser = virtualUser
+        }
+
         fun observation(observation: JsonObject?) = apply { this.observation = observation }
         fun drilldown(drilldown: RecordedPerformanceEntries?) = apply { this.drilldown = drilldown }
         fun virtualUser(virtualUser: UUID) = apply { this.virtualUser = virtualUser }
+        fun result(result: ActionResult) = apply { this.result = result }
+        fun duration(duration: Duration) = apply { this.duration = duration }
 
         @Suppress("DEPRECATION")
         fun build() = ActionMetric(

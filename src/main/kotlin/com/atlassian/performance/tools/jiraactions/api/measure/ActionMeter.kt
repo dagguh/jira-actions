@@ -11,7 +11,8 @@ import com.atlassian.performance.tools.jiraactions.api.w3c.RecordedPerformanceEn
 import com.atlassian.performance.tools.jiraactions.api.w3c.W3cPerformanceTimeline
 import java.time.Clock
 import java.time.Duration
-import java.util.*
+import java.util.UUID
+import java.util.function.Predicate
 import javax.json.JsonObject
 
 /**
@@ -21,16 +22,47 @@ import javax.json.JsonObject
  * @param output writes the metrics
  * @param clock measures latencies
  * @param w3cPerformanceTimeline records W3C performance entries
+ * @param drilldownCondition condition based on ActionMetric upon which drilldown is performed
  */
-class ActionMeter(
+class ActionMeter private constructor(
     private val virtualUser: UUID,
     private val output: ActionMetricOutput,
     private val clock: Clock,
-    private val w3cPerformanceTimeline: W3cPerformanceTimeline
+    private val w3cPerformanceTimeline: W3cPerformanceTimeline,
+    private val drilldownCondition: Predicate<ActionMetric>
 ) {
 
     @Deprecated(
-        message = "Use the primary constructor"
+        message = "Use ActionMeter.Builder instead",
+        replaceWith = ReplaceWith("ActionMeter.Builder(" +
+            "\nvirtualUser = virtualUser," +
+            "\noutput = output" +
+            "\n)" +
+            "\n.clock(clock)" +
+            "\n.performanceTimeline(w3cPerformanceTimeline)" +
+            "\n.build()")
+    )
+    constructor(
+        virtualUser: UUID,
+        output: ActionMetricOutput,
+        clock: Clock,
+        w3cPerformanceTimeline: W3cPerformanceTimeline
+    ) : this(
+        virtualUser = virtualUser,
+        output = output,
+        clock = clock,
+        w3cPerformanceTimeline = w3cPerformanceTimeline,
+        drilldownCondition = Predicate { true }
+    )
+
+    @Deprecated(
+        message = "Use ActionMeter.Builder instead",
+        replaceWith = ReplaceWith("ActionMeter.Builder(" +
+            "\nvirtualUser = virtualUser," +
+            "\noutput = output" +
+            "\n)" +
+            "\n.clock(clock)" +
+            "\n.build()")
     )
     constructor(
         virtualUser: UUID,
@@ -40,7 +72,8 @@ class ActionMeter(
         virtualUser = virtualUser,
         output = output,
         clock = clock,
-        w3cPerformanceTimeline = DisabledW3cPerformanceTimeline()
+        w3cPerformanceTimeline = DisabledW3cPerformanceTimeline(),
+        drilldownCondition = Predicate { true }
     )
 
     /**
@@ -76,50 +109,75 @@ class ActionMeter(
         observation: (T) -> JsonObject?
     ): T {
         val start = clock.instant()
+        val actionMetricBuilder = ActionMetric.Builder(
+            label = key.label,
+            virtualUser = virtualUser,
+            start = start
+        )
+
         try {
             val result = action()
-            output.write(
-                ActionMetric.Builder(
-                    label = key.label,
-                    result = ActionResult.OK,
-                    start = start,
-                    duration = Duration.between(start, clock.instant())
-                )
-                    .virtualUser(virtualUser)
-                    .observation(observation(result))
-                    .drilldown(w3cPerformanceTimeline.record())
-                    .build()
-            )
+            result?.let { actionMetricBuilder.observation(observation(result)) }
+            actionMetricBuilder.result(ActionResult.OK)
             return result
         } catch (e: Exception) {
-            val result = if (e.representsInterrupt()) {
+            val actionResult = if (e.representsInterrupt()) {
                 ActionResult.INTERRUPTED
             } else {
                 ActionResult.ERROR
             }
-            output.write(
-                ActionMetric.Builder(
-                    label = key.label,
-                    result = result,
-                    start = start,
-                    duration = Duration.between(start, clock.instant())
-                )
-                    .virtualUser(virtualUser)
-                    .drilldown(w3cPerformanceTimeline.record())
-                    .build()
-            )
-            throw Exception("Action '${key.label}' $result", e)
+            actionMetricBuilder.result(actionResult)
+            throw Exception("Action '${key.label}' $actionResult", e)
+        } finally {
+            actionMetricBuilder.duration(Duration.between(start, clock.instant()))
+            val metric = actionMetricBuilder
+                .drilldown(w3cPerformanceTimeline.record())
+                .build()
+            output.write(metric)
         }
     }
 
+    @Deprecated(message = "Use ActionMeter.Builder instead")
     fun withW3cPerformanceTimeline(
         w3cPerformanceTimeline: W3cPerformanceTimeline
     ): ActionMeter = ActionMeter(
         virtualUser = virtualUser,
         output = output,
         clock = clock,
-        w3cPerformanceTimeline = w3cPerformanceTimeline
+        w3cPerformanceTimeline = w3cPerformanceTimeline,
+        drilldownCondition = Predicate { true }
     )
+
+    class Builder(
+        private val output: ActionMetricOutput
+    ) {
+        private var virtualUser: UUID = UUID.randomUUID()
+        private var w3cPerformanceTimeline: W3cPerformanceTimeline = DisabledW3cPerformanceTimeline()
+        private var drilldownCondition: Predicate<ActionMetric> = Predicate { true }
+        private var clock = Clock.systemUTC()
+
+        constructor(meter: ActionMeter) : this(
+            meter.output
+        ) {
+            clock = meter.clock
+            w3cPerformanceTimeline = meter.w3cPerformanceTimeline
+            drilldownCondition = meter.drilldownCondition
+            virtualUser = meter.virtualUser
+        }
+
+        fun performanceTimeline(w3cPerformanceTimeline: W3cPerformanceTimeline) = apply { this.w3cPerformanceTimeline = w3cPerformanceTimeline }
+        fun drilldownCondition(drilldownCondition: Predicate<ActionMetric>) = apply { this.drilldownCondition = drilldownCondition }
+        fun clock(clock: Clock) = apply { this.clock = clock }
+        fun virtualUser(virtualUser: UUID) = apply { this.virtualUser = virtualUser }
+
+        fun build(): ActionMeter = ActionMeter(
+            virtualUser = virtualUser,
+            output = output,
+            clock = clock,
+            w3cPerformanceTimeline = w3cPerformanceTimeline,
+            drilldownCondition = drilldownCondition
+        )
+    }
 }
 
 @Deprecated("This is an internal data structure used by ActionMeter. Use ActionMeter public methods instead.")

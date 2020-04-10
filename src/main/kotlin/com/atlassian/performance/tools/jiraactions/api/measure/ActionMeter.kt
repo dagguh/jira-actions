@@ -130,10 +130,15 @@ class ActionMeter private constructor(
             throw Exception("Action '${key.label}' $actionResult", e)
         } finally {
             actionMetricBuilder.duration(Duration.between(start, clock.instant()))
-            val metric = actionMetricBuilder
-                .drilldown(w3cPerformanceTimeline.record())
-                .build()
-            output.write(metric)
+            val metric = actionMetricBuilder.build()
+            val drilledMetric = if (drilldownCondition.test(metric)) {
+                actionMetricBuilder
+                    .drilldown(w3cPerformanceTimeline.record())
+                    .build()
+            } else {
+                metric
+            }
+            output.write(drilledMetric)
         }
     }
 
